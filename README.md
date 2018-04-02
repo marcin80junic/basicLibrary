@@ -1,1 +1,1 @@
-# my java exercises
+# my first java application
