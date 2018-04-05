@@ -11,7 +11,7 @@ public class Book {
 	private String series;
 	private String title;
 	private int year;
-		
+			
 	Book(){}
 	
 	Book(String author, String series, String title, int year){
@@ -62,7 +62,7 @@ public class Book {
 	String getSeries() {return series;}
 	String getTitle() {return title;}
 	int getYear() {return year;}
-	
+		
 	void setAuthor(String a) {author = a;}
 	void setSeries(String s) {series = s;}
 	void setTitle(String t) {title = t;}

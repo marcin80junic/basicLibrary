@@ -11,21 +11,14 @@ public class Library {
 		System.out.println("3. Add a book");
 		System.out.println("4. Search for a book");
 		System.out.println("5. Remove a book");
-		System.out.println("6. Quit");
+		System.out.println("Press \"q\" to quit");
 		System.out.print("\nChoose one of avalaible options: ");
 	}
 	
 	static void editBook() {
 		
 	}
-	
-	static void addBook(String author, String series, String title, int year) {
 		
-		Book newBook = new Book(author, series, title, year);
-		Book.addToCollection(newBook);
-			
-	}
-	
 	static void removeBook() {
 		
 	}

@@ -8,8 +8,7 @@ public class BookMain {
 	public static void main(String[] args) {
 		
 		Book.generateCollection();
-		Library.showMenu();
-		
+				
 		String str;
 		int choice;
 		Scanner in = new Scanner(System.in);
@@ -18,6 +17,7 @@ public class BookMain {
 			
 			do {
 				
+				Library.showMenu();
 				str = in.nextLine();
 				if(Library.isNumeric(str)) {
 					choice = Integer.parseInt(str);
@@ -26,7 +26,6 @@ public class BookMain {
 						case 1:	System.out.println();
 								Book.getCollection();
 								System.out.println();
-								Library.showMenu();
 								break;
 						case 2: Library.editBook();
 								break;
@@ -38,22 +37,21 @@ public class BookMain {
 								String title = in.nextLine();
 								if(title.equals("")||series.equals("")||author.equals("")) {
 									System.out.println("Error: can't accept empty fields\n");
-									Library.showMenu();
 									break;
 								}
 								System.out.print("enter year: ");
 								String y = in.nextLine();
 								if(Library.isNumeric(y)) {
-									int year = Integer.parseInt(in.nextLine());
-									Library.addBook(author, series, title, year);
+									int year = Integer.parseInt(y);
+									Book newBook = new Book(author, series, title, year);
+									Book.addToCollection(newBook);
 								}
 								else {
 									System.out.println("Error: year must be a number\n");
-									Library.showMenu();
 									break;
 								}
 								System.out.print("\nDo you want to save the Library y/n?");
-								String ch2 = in.next();
+								String ch2 = in.nextLine();
 								if(ch2.equals("n")) {
 									System.out.println("Addition(s) discarded");
 									System.out.println();
@@ -64,19 +62,19 @@ public class BookMain {
 									System.out.println("...Done");
 									System.out.println();
 								}
-								Library.showMenu();
 								break;
 						case 4: break;
-						case 5: break;
-						case 6: System.out.println("Quitting..");
-								break;					
-					}
-				}
-				
+						case 5: Book.getCollection();
+								System.out.print("\nChoose the book to remove (enter the index number):");
+								break;
+						default: System.out.println("\nnot a valid choice, try again...\n");
+					
+					} else System.out.println("\nnot a valid choice, try again...\n");
+				} if(str.equals("q")) System.out.println("Quitting..");
 			}while(!str.equals("q"));
 			
 			in.close();
 		
-		} catch(Exception exc) {System.out.println(exc);}
+		}catch(Exception exc) {System.out.println(exc);} 
 	}
 }
