@@ -1,9 +1,9 @@
 package books;
 
 public class Library {
-	
+
 	static void showMenu() {
-		
+		System.out.println();
 		System.out.println("My Library Menu:");
 		System.out.println();
 		System.out.println("1. List all my books");
@@ -12,6 +12,20 @@ public class Library {
 		System.out.println("4. Search for a book");
 		System.out.println("5. Remove a book");
 		System.out.println("Press \"q\" to quit");
+<<<<<<< HEAD
+		System.out.println();
+		System.out.print("\nChoose one of avalaible options: ");
+	}
+
+	static void editBook(int i) {
+		System.out.println();
+		System.out.println("1. Author: " + Book.getAuthor(i));
+		System.out.println("2. Series: " + Book.getSeries(i));
+		System.out.println("3. Title: " + Book.getTitle(i));
+		System.out.println("4. Year: " + Book.getYear(i));
+		System.out.println();
+		System.out.print("Choose which value would you like to change (enter a number): ");
+=======
 		System.out.print("\nChoose one of avalaible options: ");
 	}
 	
@@ -21,21 +35,23 @@ public class Library {
 		
 	static void removeBook() {
 		
+>>>>>>> 40e5711425161bfadad20efdd74370a76765c999
 	}
-	
+
 	static boolean isNumeric(String s) {
 		char ch;
-		for(int i=0; i<s.length(); i++) {
+		for (int i = 0; i < s.length(); i++) {
 			ch = s.charAt(i);
-			if((ch<'0') | (ch>'9') )
+			if ((ch < '0') | (ch > '9'))
 				return false;
 		}
 		return true;
 	}
-	
-	static boolean isValidChoice(int num){
-		if((num>0) && (num<=6)) return true;
-		else return false;
+
+	static boolean isValidChoice(int num) {
+		if ((num > 0) && (num <= 6))
+			return true;
+		else
+			return false;
 	}
 }
-	
