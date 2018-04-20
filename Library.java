@@ -12,7 +12,6 @@ public class Library {
 		System.out.println("4. Search for a book");
 		System.out.println("5. Remove a book");
 		System.out.println("Press \"q\" to quit");
-<<<<<<< HEAD
 		System.out.println();
 		System.out.print("\nChoose one of avalaible options: ");
 	}
@@ -25,17 +24,6 @@ public class Library {
 		System.out.println("4. Year: " + Book.getYear(i));
 		System.out.println();
 		System.out.print("Choose which value would you like to change (enter a number): ");
-=======
-		System.out.print("\nChoose one of avalaible options: ");
-	}
-	
-	static void editBook() {
-		
-	}
-		
-	static void removeBook() {
-		
->>>>>>> 40e5711425161bfadad20efdd74370a76765c999
 	}
 
 	static boolean isNumeric(String s) {
