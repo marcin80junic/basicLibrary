@@ -5,6 +5,7 @@ import java.io.*;
 
 public class Book implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	static private Map<Integer, Book> collection = new LinkedHashMap<Integer, Book>();
 	private String author;
 	private String series;

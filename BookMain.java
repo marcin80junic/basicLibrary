@@ -125,22 +125,26 @@ public class BookMain {
 							if (Library.isNumeric(y)) {
 								int year = Integer.parseInt(y);
 								Book newBook = new Book(author, series, title, year);
-								Book.addToCollection(newBook);
-							} else {
-								System.out.println("Error: year must be a number");
-								break;
-							}
-							System.out.print("\nDo you want to save the Library y/n?");
-							String ch2 = in.nextLine();
-							if (ch2.equals("n"))
-								System.out.println("Addition(s) discarded");
-							if (ch2.equals("y")) {
-								System.out.print("Saving Library...");
-								Book.saveCollection();
-								System.out.println("...Done");
+								System.out.print("\nDo you want to save the Library y/n?");
+								String ch2 = in.nextLine();
+								if (ch2.equals("n"))
+									System.out.println("Addition(s) discarded");
+								else if (ch2.equals("y")) {
+									System.out.print("Saving Library...");
+									Book.saveCollection();
+									System.out.println("...Done");
+									Book.addToCollection(newBook);
+								} 
+								else {
+									System.out.println("Error: year must be a number");
+									break;
+								}
 							}
 							break;
-						case 4:
+						case 4: 
+							System.out.print("Enter a text to search for: ");
+							String sea = in.nextLine();
+								
 							break;
 						case 5:
 							Book.printCollection();
