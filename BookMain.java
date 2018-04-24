@@ -11,18 +11,37 @@ public class BookMain {
 		Scanner in = new Scanner(System.in);
 
 		try {
-			Book.generateCollection();
+			
 			do {
-
+				Book.generateCollection();
 				Library.showMenu();
 				str = in.nextLine();
 				if (Library.isNumeric(str)) {
 					choice = Integer.parseInt(str);
-					if (Library.isValidChoice(choice))
+					if (Library.isValidChoice(choice, 5))
 						switch (choice) {
 
 						case 1:
 							Book.printCollection();
+							do {
+								Library.collectionMenu();
+								String act = in.nextLine();
+								if(Library.isNumeric(act)) {
+									int a = Integer.parseInt(act);
+									if(Library.isValidChoice(a, 4)) Book.sortCollection(a);
+									else System.out.println("not a valid choice..");
+								}
+								else if(act.equals("q")) {
+									System.out.print("\nDo you want to save the new order? y/n: ");
+									String yn = in.nextLine();
+									if(yn.equals("y")) {
+										Book.saveCollection();
+										break;
+									}
+									else break;
+								}
+								else System.out.println("not a valid choice..");
+							} while(true);
 							break;
 						case 2:
 							Book.printCollection();
@@ -142,9 +161,14 @@ public class BookMain {
 							}
 							break;
 						case 4: 
-							System.out.print("Enter a text to search for: ");
-							String sea = in.nextLine();
-								
+							do {
+								System.out.print("\nEnter a text to search for: ");
+								String sea = in.nextLine();
+								Book.searchCollection(sea);
+								System.out.print("Do you want to search for different frase? y/n: ");
+								String ans = in.nextLine();
+								if(ans.equals("n")) break; 
+							}while(true);
 							break;
 						case 5:
 							Book.printCollection();

@@ -28,6 +28,7 @@ public class Book implements Serializable{
 		index = 1;
 		try {
 			ObjectInputStream oin = new ObjectInputStream(new FileInputStream("Ser.txt"));
+			@SuppressWarnings("unchecked")
 			ArrayList<Book> al = (ArrayList<Book>)oin.readObject();
 			for(Book b: al) {
 				collection.put(index,  b);
@@ -38,6 +39,7 @@ public class Book implements Serializable{
 	}
 
 	static void printCollection() {
+		System.out.println();
 		for (Map.Entry<Integer, Book> a : collection.entrySet()) {
 			index = a.getKey();
 			Book b = a.getValue();
@@ -46,6 +48,60 @@ public class Book implements Serializable{
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	static void sortCollection(int i) {
+		ArrayList<Book> library = new ArrayList<>();
+		index = 1;
+		for(Map.Entry<Integer, Book> entry: collection.entrySet()) {
+			Book b = entry.getValue();
+			library.add(b);
+		}
+		switch(i) {
+		
+		case 1: Collections.sort(library, new Comparator<Book>() {
+				public int compare(Book b1, Book b2) {
+					return b1.author.compareTo(b2.author);
+				}
+			});
+			for(Book b: library) {
+				collection.put(index, b);
+				index++;
+			}
+			printCollection();
+			break;
+		case 2: Collections.sort(library, new Comparator<Book>() {
+				public int compare(Book b1, Book b2) {
+					return b1.series.compareTo(b2.series);
+				}
+			});
+			for(Book b: library) {
+				collection.put(index, b);
+				index++;
+			}
+			printCollection();
+			break;
+		case 3: Collections.sort(library, new Comparator<Book>() {
+				public int compare(Book b1, Book b2) {
+					return b1.title.compareTo(b2.title);
+				}
+			});
+			for(Book b: library) {
+				collection.put(index, b);
+				index++;
+			}
+			printCollection();
+			break;
+		case 4: Collections.sort(library,  new Comparator<Book>() {
+				public int compare(Book b1, Book b2) {
+					if(b1.year==b2.year)return 0;
+					else if(b1.year > b2.year) return 1;
+					else return -1;
+				}
+			});
+			printCollection();
+			break;
+		}
 	}
 
 	static void addToCollection(Book a) {
@@ -77,6 +133,20 @@ public class Book implements Serializable{
 		out.writeObject(al);
 		out.flush();
 		out.close();
+	}
+	
+	static void searchCollection(String sea) {
+		System.out.println("The results matching \"" +sea+"\":");
+		System.out.println();
+		for(Map.Entry<Integer, Book> entry: collection.entrySet()) {
+			Book b = entry.getValue();
+			index = entry.getKey();
+			if((b.author.contains(sea)) || (b.series.contains(sea)) || (b.title.contains(sea)) || (String.valueOf(b.year).contains(sea))) {
+				System.out.println("Index: " + index + ", Author: " + b.getAuthor() + ", Series: \"" + b.getSeries()
+					+ "\", Title: \"" + b.getTitle() + "\", Year: " + b.getYear());
+			}
+		}
+		System.out.println();
 	}
 
 	static String getBook(int i) {

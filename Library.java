@@ -15,6 +15,17 @@ public class Library {
 		System.out.println();
 		System.out.print("\nChoose one of avalaible options: ");
 	}
+	
+	static void collectionMenu() {
+		System.out.println();
+		System.out.println("1. Sort according to author.");
+		System.out.println("2. Sort according to series.");
+		System.out.println("3. Sort according to title.");
+		System.out.println("4. Sort according to year.");
+		System.out.println("press \"q\" to go back to main menu");
+		System.out.println();
+		System.out.print("Choose one of the options:");
+	}
 
 	static void editBook(int i) {
 		System.out.println();
@@ -36,8 +47,8 @@ public class Library {
 		return true;
 	}
 
-	static boolean isValidChoice(int num) {
-		if ((num > 0) && (num <= 6))
+	static boolean isValidChoice(int num, int opt) {
+		if ((num > 0) && (num <= opt))
 			return true;
 		else
 			return false;
