@@ -7,6 +7,7 @@ public class Book implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	static private Map<Integer, Book> collection = new LinkedHashMap<Integer, Book>();
+	static private ArrayList<Book> library = new ArrayList<>();
 	private String author;
 	private String series;
 	private String title;
@@ -14,8 +15,7 @@ public class Book implements Serializable{
 	static private int index;
 	static int i;
 
-	Book() {
-	}
+	Book() {}
 
 	Book(String author, String series, String title, int year) {
 		this.author = author;
@@ -27,7 +27,7 @@ public class Book implements Serializable{
 	static void generateCollection() throws Exception{
 		index = 1;
 		try {
-			ObjectInputStream oin = new ObjectInputStream(new FileInputStream("Ser.txt"));
+			ObjectInputStream oin = new ObjectInputStream(new FileInputStream("library.dat"));
 			@SuppressWarnings("unchecked")
 			ArrayList<Book> al = (ArrayList<Book>)oin.readObject();
 			for(Book b: al) {
@@ -51,8 +51,8 @@ public class Book implements Serializable{
 	}
 	
 	static void sortCollection(int i) {
-		ArrayList<Book> library = new ArrayList<>();
 		index = 1;
+		library.clear();
 		for(Map.Entry<Integer, Book> entry: collection.entrySet()) {
 			Book b = entry.getValue();
 			library.add(b);
@@ -64,6 +64,7 @@ public class Book implements Serializable{
 					return b1.author.compareTo(b2.author);
 				}
 			});
+			collection.clear();
 			for(Book b: library) {
 				collection.put(index, b);
 				index++;
@@ -75,6 +76,7 @@ public class Book implements Serializable{
 					return b1.series.compareTo(b2.series);
 				}
 			});
+			collection.clear();
 			for(Book b: library) {
 				collection.put(index, b);
 				index++;
@@ -86,6 +88,7 @@ public class Book implements Serializable{
 					return b1.title.compareTo(b2.title);
 				}
 			});
+			collection.clear();
 			for(Book b: library) {
 				collection.put(index, b);
 				index++;
@@ -99,6 +102,11 @@ public class Book implements Serializable{
 					else return -1;
 				}
 			});
+			collection.clear();
+			for(Book b: library) {
+				collection.put(index, b);
+				index++;
+			}
 			printCollection();
 			break;
 		}
@@ -117,13 +125,15 @@ public class Book implements Serializable{
 		try {
 			collection.remove(i);
 			saveCollection();
-			collection.clear();
-			generateCollection();
+			if(!collection.isEmpty()) {
+				collection.clear();
+				generateCollection();
+			}
 		}catch(Exception e) {System.out.println(e);}
 	}
 
 	static void saveCollection() throws Exception{
-		FileOutputStream fout = new FileOutputStream("Ser.txt");
+		FileOutputStream fout = new FileOutputStream("library.dat");
 		ObjectOutputStream out = new ObjectOutputStream(fout);
 		ArrayList<Book> al = new ArrayList<>();
 		for(Map.Entry<Integer, Book> entry: collection.entrySet()) {
@@ -141,12 +151,37 @@ public class Book implements Serializable{
 		for(Map.Entry<Integer, Book> entry: collection.entrySet()) {
 			Book b = entry.getValue();
 			index = entry.getKey();
-			if((b.author.contains(sea)) || (b.series.contains(sea)) || (b.title.contains(sea)) || (String.valueOf(b.year).contains(sea))) {
+			String aut = b.author.toLowerCase();
+			String ser = b.series.toLowerCase();
+			String tit = b.title.toLowerCase();
+			if((aut.contains(sea)) || (ser.contains(sea)) || (tit.contains(sea)) || (String.valueOf(b.year).contains(sea))) {
 				System.out.println("Index: " + index + ", Author: " + b.getAuthor() + ", Series: \"" + b.getSeries()
 					+ "\", Title: \"" + b.getTitle() + "\", Year: " + b.getYear());
 			}
 		}
 		System.out.println();
+	}
+	
+	@SuppressWarnings("unchecked")
+	static boolean compareCollections() throws Exception{
+		try {
+			ObjectInputStream oin = new ObjectInputStream(new FileInputStream("library.dat"));
+			ArrayList<Book> al1 = new ArrayList<>();
+			al1 = (ArrayList<Book>)oin.readObject();
+			oin.close();
+			ArrayList<Book> al2 = new ArrayList<>();
+			for(Map.Entry<Integer, Book> e: collection.entrySet()) {
+				Book b = e.getValue();
+				al2.add(b);
+			}
+			Iterator<Book> i1 = al1.iterator();
+			Iterator<Book> i2 = al2.iterator();
+			while(i1.hasNext() && i2.hasNext()) {
+				Book b1 = i1.next(); Book b2 = i2.next();
+				if(!(b1.author.equals(b2.author)) || !(b1.series.equals(b2.series)) || !(b1.title.equals(b2.title)) || b1.year!=b2.year) return false;
+			}
+		}catch (FileNotFoundException exc) {System.out.println(exc);}
+		return true;
 	}
 
 	static String getBook(int i) {
@@ -199,25 +234,11 @@ public class Book implements Serializable{
 		return "invalid choice";
 	}
 
-	String getAuthor() {
-		return author;
-	}
-
-	String getSeries() {
-		return series;
-	}
-
-	String getTitle() {
-		return title;
-	}
-
-	int getYear() {
-		return year;
-	}
-
-	static int getCollection() {
-		return collection.size();
-	}
+	String getAuthor() {return author;}
+	String getSeries() {return series;}
+	String getTitle() {return title;}
+	int getYear() {return year;}
+	static int getCollection() {return collection.size();}
 
 	static void setAuthor(int i, String a) {
 		try {

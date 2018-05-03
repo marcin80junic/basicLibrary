@@ -32,15 +32,15 @@ public class BookMain {
 									else System.out.println("not a valid choice..");
 								}
 								else if(act.equals("q")) {
-									System.out.print("\nDo you want to save the new order? y/n: ");
-									String yn = in.nextLine();
-									if(yn.equals("y")) {
-										Book.saveCollection();
-										break;
-									}
-									else break;
-								}
-								else System.out.println("not a valid choice..");
+									if(!Book.compareCollections()) {
+										System.out.print("\nDo you want to save the new order? y/n: ");
+										String yn = in.nextLine();
+										if(yn.equals("y")) {
+											Book.saveCollection();
+											break;
+										} else break;
+									} else break;
+								} else System.out.println("not a valid choice..");
 							} while(true);
 							break;
 						case 2:
@@ -123,10 +123,8 @@ public class BookMain {
 										System.out.println("Not a valid choice..");
 										break;
 									}
-								} else
-									System.out.println("enter numeric value please..");
-							} else
-								System.out.println("enter numeric value please..");
+								} else System.out.println("enter numeric value please..");
+							} else System.out.println("enter numeric value please..");
 							break;
 						case 3:
 							System.out.print("\nenter author: ");
@@ -164,20 +162,21 @@ public class BookMain {
 							do {
 								System.out.print("\nEnter a text to search for: ");
 								String sea = in.nextLine();
+								sea.toLowerCase();
 								Book.searchCollection(sea);
 								System.out.print("Do you want to search for different frase? y/n: ");
 								String ans = in.nextLine();
 								if(ans.equals("n")) break; 
-							}while(true);
+							} while(true);
 							break;
 						case 5:
 							Book.printCollection();
-							System.out.print("\nChoose the book to remove (enter the index number):");
+							System.out.print("\nChoose the book to remove (enter the index number) or \"q\" to cancel:");
 							String s = in.nextLine();
-							if (Library.isNumeric(s)) {
+							if(s.equals("q")) break;
+							if(Library.isNumeric(s)) {
 								int i = Integer.parseInt(s);
-								System.out
-										.print("Are you sure you want to remove this book: " + Book.getBook(i) + " ? ");
+								System.out.print("Are you sure you want to remove this book: " + Book.getBook(i) + " ? ");
 								String st = in.nextLine();
 								if (st.equals("n"))
 									System.out.println("Action cancelled");
@@ -185,25 +184,18 @@ public class BookMain {
 									System.out.print("\nRemoving a book...");
 									Book.removeFromCollection(i);
 									System.out.println("...Done");
-								} else
-									System.out.println("The choice must be \"y\" or \"n\"");
-							} else
-								System.out.println("wrong number format");
+								} else System.out.println("The choice must be \"y\" or \"n\"");
+							} else System.out.println("wrong number format");
 							break;
-						default:
+						default: 
 							System.out.println("\nnot a valid choice, try again...");
-						}
-					else
-						System.out.println("\nnot a valid choice, try again...");
+						} else System.out.println("\nnot a valid choice, try again...");
 				}
 				if (str.equals("q"))
 					System.out.println("Quitting..");
 			} while (!str.equals("q"));
-
 			in.close();
-
-		} catch (Exception exc) {
-			System.out.println(exc);
+		} catch (Exception exc) {System.out.println(exc);
 		}
 	}
 }
